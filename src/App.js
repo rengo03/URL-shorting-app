@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Boost from "./components/Boost";
+import Advanced from "./components/Advanced";
+import Showcase from "./components/Showcase";
+import Shortener from "./components/Shortener";
 
-function App() {
+import { useReducer } from "react";
+
+import { MenuContext } from "./store/Menu/context.js";
+import { menuReducer, initialState as menuInitialState } from "./store/Menu/reducer";
+
+export default function App() {
+
+  const [menuState, menuDispatch] = useReducer( menuReducer, menuInitialState);
+  const menuContextValue = {
+    menuState,
+    menuDispatch
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <MenuContext.Provider value={menuContextValue}>
+      <Header/>
+      <Showcase/>
+      <Shortener/>
+      <Advanced/>
+      <Boost/>
+      <Footer/>
+      </MenuContext.Provider>
+    </>
   );
 }
 
-export default App;
